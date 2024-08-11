@@ -7,14 +7,15 @@ var angle_y_max: float = 0.01
 
 var tween_rot: Tween
 var tween_handle: Tween
+var tween_hover: Tween
 
 
 @onready var card_texture = $CardTexture
 
 
-func _process(_delta):
+func _process(delta):
 	if mouse_hover: _rotate_card()
-	if mouse_drag: _drag_card()
+	if mouse_drag: _drag_card(delta)
 
 
 func _rotate_card():
@@ -40,7 +41,7 @@ func _rotate_card_back():
 	tween_rot.tween_property(card_texture.material, "shader_parameter/y_rot", 0.0, 0.5)
 
 
-func _drag_card():
+func _drag_card(delta):
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	global_position = mouse_pos
 
@@ -48,13 +49,32 @@ func _drag_card():
 func _on_gui_input(event: InputEvent):
 	if not event is InputEventMouseButton: return
 	if event.button_index != MOUSE_BUTTON_LEFT: return
-	mouse_drag = event.is_pressed()
+	if event.is_pressed():
+		mouse_drag = true
+	else:
+		mouse_drag = false
+		
+
+
+func _scale_up_tween():
+	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween_hover.tween_property(self, "scale", Vector2(1.2, 1.2), 0.5)
+
+
+func _scale_down_tween():
+	if tween_hover and tween_hover.is_running():
+		tween_hover.kill()
+	
+	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween_hover.tween_property(self, "scale", Vector2.ONE, 0.55)
 
 
 func _on_mouse_entered():
 	mouse_hover = true
+	_scale_up_tween()
 
 
 func _on_mouse_exited():
 	mouse_hover = false
+	_scale_down_tween()
 	_rotate_card_back()
