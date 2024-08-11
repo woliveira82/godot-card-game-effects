@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5anmgowrphsh"]
+
+[ext_resource type="Script" path="res://scenes/card/card.gd" id="1_hpov2"]
+[ext_resource type="Shader" path="res://shaders/2d-perspective.gdshader" id="1_j5xev"]
+[ext_resource type="Texture2D" uid="uid://dl8ic6gqnb54c" path="res://assets/card-spades-1.png" id="1_umao6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b7iee"]
+shader = ExtResource("1_j5xev")
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = true
+shader_parameter/y_rot = 0.0
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[node name="Card" type="Button"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -580.0
+offset_top = -328.0
+offset_right = -572.0
+offset_bottom = -320.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_hpov2")
+
+[node name="CardTexture" type="TextureRect" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_b7iee")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -72.0
+offset_right = 48.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_umao6")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

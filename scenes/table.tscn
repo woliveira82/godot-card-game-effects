@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bs3pxfm81f22v"]
+
+[ext_resource type="PackedScene" uid="uid://b5anmgowrphsh" path="res://scenes/card/card.tscn" id="1_jbi8t"]
+
+[node name="Table" type="Node2D"]
+
+[node name="Card" parent="." instance=ExtResource("1_jbi8t")]
+offset_left = 562.0
+offset_top = 304.0
+offset_right = 570.0
+offset_bottom = 312.0
