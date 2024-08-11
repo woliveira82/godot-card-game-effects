@@ -4,18 +4,20 @@ var mouse_hover: bool = false
 var mouse_drag: bool = false
 var angle_x_max: float = 0.01
 var angle_y_max: float = 0.01
+var max_offset_shadow: float = 30.0
 
 var tween_rot: Tween
 var tween_handle: Tween
 var tween_hover: Tween
 
-
 @onready var card_texture = $CardTexture
+@onready var shadow = $Shadow
 
 
-func _process(delta):
+func _process(_delta):
 	if mouse_hover: _rotate_card()
-	if mouse_drag: _drag_card(delta)
+	if mouse_drag: _drag_card()
+	_handle_shadow()
 
 
 func _rotate_card():
@@ -41,7 +43,7 @@ func _rotate_card_back():
 	tween_rot.tween_property(card_texture.material, "shader_parameter/y_rot", 0.0, 0.5)
 
 
-func _drag_card(delta):
+func _drag_card():
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	global_position = mouse_pos
 
@@ -67,6 +69,14 @@ func _scale_down_tween():
 	
 	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween_hover.tween_property(self, "scale", Vector2.ONE, 0.55)
+
+
+func _handle_shadow():
+	var center: Vector2 = get_viewport_rect().size / 2.0
+	var distance: float = global_position.x - center.x
+	var offset = remap(distance, -center.x, center.x, max_offset_shadow, -max_offset_shadow)
+	shadow.position.x = offset - shadow.size.x / 2
+	var i = 0
 
 
 func _on_mouse_entered():
