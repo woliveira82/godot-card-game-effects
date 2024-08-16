@@ -4,11 +4,12 @@
 [ext_resource type="Shader" path="res://shaders/2d-perspective.gdshader" id="1_j5xev"]
 [ext_resource type="Texture2D" uid="uid://dl8ic6gqnb54c" path="res://assets/card-spades-1.png" id="1_umao6"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_b7iee"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e5oec"]
+resource_local_to_scene = true
 shader = ExtResource("1_j5xev")
 shader_parameter/fov = 90.0
 shader_parameter/cull_back = true
-shader_parameter/y_rot = 0.0
+shader_parameter/y_rot = 8.55e-06
 shader_parameter/x_rot = 0.0
 shader_parameter/inset = 0.0
 
@@ -50,7 +51,7 @@ texture = ExtResource("1_umao6")
 
 [node name="CardTexture" type="TextureRect" parent="."]
 texture_filter = 1
-material = SubResource("ShaderMaterial_b7iee")
+material = SubResource("ShaderMaterial_e5oec")
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

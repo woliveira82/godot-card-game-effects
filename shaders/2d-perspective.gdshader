@@ -17,7 +17,6 @@ uniform float inset : hint_range(0, 1) = 0.0;
 varying flat vec2 o;
 varying vec3 p;
 
-// const float PI = 3.14159;
 
 // Creates rotation matrix
 void vertex(){
