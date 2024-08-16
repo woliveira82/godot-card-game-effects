@@ -4,6 +4,9 @@ extends Control
 
 var _drawing: bool = false
 var tween: Tween
+var hand_node_pos: Vector2
+
+@onready var hand = %Hand
 
 
 func _input(event):
@@ -11,7 +14,7 @@ func _input(event):
 	if event.button_index != MOUSE_BUTTON_LEFT or not event.is_pressed(): return
 	
 	if not _drawing:
-		draw_cards(5)
+		draw_cards(15)
 
 
 func draw_cards(amount: int):
@@ -24,4 +27,7 @@ func draw_cards(amount: int):
 	for i in range(amount):
 		var instance = card_scene.instantiate()
 		add_child(instance)
-		print("moving")
+		instance.position = Vector2.ZERO
+		tween.tween_property(instance, "global_position", hand.enter_position, 0.3 + (i * 0.05))
+		tween.tween_callback(hand.add_card)
+		tween.tween_callback(instance.queue_free)

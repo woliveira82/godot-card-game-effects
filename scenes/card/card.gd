@@ -1,4 +1,5 @@
 extends Control
+class_name Card
 
 const max_rot_angle: float = 15.0
 
