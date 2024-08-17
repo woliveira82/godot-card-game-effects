@@ -1,15 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5anmgowrphsh"]
+[gd_scene load_steps=6 format=3 uid="uid://b5anmgowrphsh"]
 
 [ext_resource type="Script" path="res://scenes/card/card.gd" id="1_hpov2"]
 [ext_resource type="Shader" path="res://shaders/2d-perspective.gdshader" id="1_j5xev"]
 [ext_resource type="Texture2D" uid="uid://dl8ic6gqnb54c" path="res://assets/card-spades-1.png" id="1_umao6"]
+[ext_resource type="Texture2D" uid="uid://c6j5fvxdbm52a" path="res://assets/card-back3.png" id="4_3h1a2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e5oec"]
 resource_local_to_scene = true
 shader = ExtResource("1_j5xev")
 shader_parameter/fov = 90.0
 shader_parameter/cull_back = true
-shader_parameter/y_rot = 8.55e-06
+shader_parameter/y_rot = 0.0
 shader_parameter/x_rot = 0.0
 shader_parameter/inset = 0.0
 
@@ -34,6 +35,7 @@ script = ExtResource("1_hpov2")
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(1, 1, 1, 0.196078)
 show_behind_parent = true
+z_index = -1
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
@@ -50,6 +52,7 @@ grow_vertical = 2
 texture = ExtResource("1_umao6")
 
 [node name="CardTexture" type="TextureRect" parent="."]
+z_index = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_e5oec")
 layout_mode = 1
@@ -64,7 +67,7 @@ offset_right = 48.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_umao6")
+texture = ExtResource("4_3h1a2")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

@@ -14,10 +14,15 @@ func _ready():
 	enter_position = original_pos - Vector2(0.0, 160.0)
 
 
-func add_card():
-	var instance = card_scene.instantiate()
+func add_card(card_value: String):
+	var instance: Card = card_scene.instantiate()
+	instance.value = card_value
 	add_child(instance)
+	instance.set_card_texture()
+	
+	instance.card_texture.material.set("shader_parameter/y_rot", 90.0)
 	instance.global_position = enter_position
+	instance.flip_from_right()
 	order_hand()
 
 

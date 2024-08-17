@@ -6,7 +6,14 @@ var _drawing: bool = false
 var tween: Tween
 var hand_node_pos: Vector2
 
+var draw_pile: Array
+
 @onready var hand = %Hand
+
+
+func _ready():
+	draw_pile = CardValues.CARD_LIST.duplicate(true)
+	draw_pile.shuffle()
 
 
 func _input(event):
@@ -29,5 +36,6 @@ func draw_cards(amount: int):
 		add_child(instance)
 		instance.position = Vector2.ZERO
 		tween.tween_property(instance, "global_position", hand.enter_position, 0.3 + (i * 0.05))
-		tween.tween_callback(hand.add_card)
-		tween.tween_callback(instance.queue_free)
+		tween.tween_callback(instance.flip_to_left)
+		tween.tween_callback(instance.queue_free).set_delay(0.1)
+		tween.tween_callback(hand.add_card.bind(draw_pile.pop_front()))

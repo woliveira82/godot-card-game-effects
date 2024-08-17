@@ -18,17 +18,40 @@ var oscillator_velocity: float = 0.0
 var tween_hover: Tween
 var tween_handle: Tween
 var tween_scale: Tween
-var tween_rotation: Tween
+var tween_flip: Tween
+
+var value: String = "card-back3.png"
 
 @onready var card_texture = $CardTexture
 @onready var shadow = $Shadow
+
+
+func set_card_texture():
+	card_texture.texture = load("res://assets/" + value)
+
+
+func flip_to_left():
+	if tween_flip and tween_flip.is_running():
+		tween_flip.kill()
+	
+	tween_flip = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
+	tween_flip.tween_property(card_texture.material, "shader_parameter/y_rot", -90.0, 0.1)
+	return true
+
+
+
+func flip_from_right():
+	if tween_flip and tween_flip.is_running():
+		tween_flip.kill()
+	
+	tween_flip = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween_flip.tween_property(card_texture.material, "shader_parameter/y_rot", 0.0, 0.1)
 
 
 func _process(delta: float):
 	_tilt_card()
 	_drag_card(delta)
 	_handle_shadow()
-
 
 func _tilt_card():
 	if not mouse_hover: return
@@ -89,6 +112,7 @@ func _on_gui_input(event: InputEvent):
 func _scale_up_tween():
 	tween_scale = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween_scale.tween_property(self, "scale", Vector2(1.2, 1.2), 0.5)
+	z_index = 3
 
 
 func _scale_down_tween():
@@ -97,6 +121,7 @@ func _scale_down_tween():
 	
 	tween_scale = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween_scale.tween_property(self, "scale", Vector2.ONE, 0.55)
+	z_index = 1
 
 
 func _handle_shadow():
